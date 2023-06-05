@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+coverage
+expected
+website
+gh-pages
+vendors
+examples
+__tests__/fixtures
+lib
+template
