@@ -2,7 +2,9 @@
   "name": "moka-cli",
   "version": "0.0.1",
   "description": "The engineering scaffolding supporting moka low code solution",
-  "main": "index.js",
+  "bin": {
+    "moka": "lib/index.js"
+  },
   "scripts": {
     "start": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,8 +34,6 @@
   },
   "homepage": "https://github.com/render-ydb/moka-cli#readme",
   "dependencies": {
-    "@commitlint/cli": "^17.6.5",
-    "@commitlint/config-conventional": "^17.6.5",
     "chalk": "4.1.2",
     "commander": "^10.0.1",
     "npmlog": "^7.0.1",
@@ -43,11 +43,15 @@
     "typescript": "^5.1.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.2.5",
     "@types/npmlog": "^4.1.4",
     "@types/root-check": "^1.0.0",
     "@types/semver": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
     "eslint": "^8.42.0",
     "husky": "^1.3.1"
   }
