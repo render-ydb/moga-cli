@@ -7,7 +7,7 @@ class PublishCommand extends Command {
         super(rest, options, cmd)
     }
     init(): void {
-
+        console.log("todo")
     }
 
     exec(): void {
