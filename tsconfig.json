@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "module": "commonjs",
         "moduleResolution": "node",
         "strict": true,
         "strictNullChecks": false,
-        "jsx": "react",
         "target": "es6",
         "experimentalDecorators": true,
         "skipLibCheck": true,
@@ -20,6 +20,7 @@
         "emitDecoratorMetadata": true,
         "preserveConstEnums": true,
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "rootDir": "src",
         "outDir": "lib",
         "types": [
@@ -32,7 +33,7 @@
         ],
     },
     "include": [
-        "src/*",
+        "src/**/*",
     ],
     "exclude": [
         "test",
