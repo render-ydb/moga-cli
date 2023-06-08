@@ -3,11 +3,12 @@
 import rootCheck = require("root-check");
 import semver = require("semver");
 import fs = require("fs");
-import logger = require("./utils/logger");
-import DevCommand = require("./commands/dev");
-import InitCommand = require("./commands/init");
-import PublishCommand = require("./commands/publish");
+import devCommand = require("./commands/dev");
+import initCommand = require("./commands/init");
+import publishCommand = require("./commands/publish");
 
+
+import { similar, log } from "render-utils";
 import { CLI_NAME, USER_HOME_PATH } from './constant';
 import { program } from "commander";
 const pkg = require("../package.json");
@@ -39,24 +40,71 @@ const checkUSER_HOME_PATH = () => {
 };
 
 const registerCommand = () => {
-   
-    program
-    .version(pkg.version)
-    .name(CLI_NAME)
-    .usage('<command> [options]');
 
     program
-    .option('-d, --debug', 'enabling debug mode', false)
-    .option('-dp, --dirPath <dirPath>', 'specify the local test directory for development');
+        .version(pkg.version)
+        .name(CLI_NAME)
+        .usage('<command> [options]');
 
     program
-    .command('init [command]')
-    .description('initialize the project')
-    .option('-f, --force', 'force initialize the project', false)
-    .option('-du, --disableupdate', 'disable automatic download of the latest version package', false)
-    .action((...arg) => {
-        InitCommand(arg[0], arg[1], arg[2]);
+        .option('-d, --debug', 'enable debug mode', false)
+        .option('-tp, --testPath <testPath>', 'specify the local test directory for development');
+
+    // initialize the moka component or app
+    program
+        .command('init [command]')
+        .description('initialize the project')
+        .option('-f, --force', 'force initialize the project', false)
+        .option('-du, --disableupdate', 'disable automatic download of the latest version package', false)
+        .action((...arg) => {
+            initCommand(arg[0], arg[1], arg[2]);
+        });
+
+    // run the moka component or app
+    program
+        .command('dev [command]')
+        .description('run the moka component or app')
+        .action((...arg) => {
+            devCommand(arg[0], arg[1], arg[2]);
     });
+
+    // publish the moka component or app    
+    program
+        .command('publish [command]')
+        .description('publish the moka component or app    ')
+        .action((...arg) => {
+            publishCommand(arg[0], arg[1], arg[2]);
+        });
+
+    // command tips 
+    program.on('command:*', (unavailableCommands) => {
+        const unknownCommandName = unavailableCommands[0];
+        log.error(`unknown command '${unknownCommandName}'`);
+
+        let maxIndex = 0;
+        let result = 0;
+        program.commands.forEach((cmd, index) => {
+            const res = similar(cmd.name(), unknownCommandName);
+            if (res > result) {
+                result = res;
+                maxIndex = index;
+            }
+        });
+        if (result) {
+            console.log(`Do you mean is "${program.commands[maxIndex].name()}" command`);
+        }
+    });
+
+    // enable debug mode
+    program.on('option:debug', () => {
+        log.setLogLevel("debug");
+    });
+
+
+    program.on('option:testPath', () => {
+        process.env.LOCAL_DEV_PATH = program.opts().testPath;
+    });
+
     program.parse(process.argv);
 }
 
@@ -66,7 +114,7 @@ const registerCommand = () => {
             await prepare();
             registerCommand()
         } catch (e) {
-            logger.error("", (e as Error).stack);
+            log.error((e as Error).stack);
             process.exit(1);
         }
 
