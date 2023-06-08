@@ -1,4 +1,4 @@
-import { Command, CommandType, Json } from 'render-command';
+import { Command, CommandType, Json } from "render-command";
 
 class DevCommand extends Command {
     options: Json;

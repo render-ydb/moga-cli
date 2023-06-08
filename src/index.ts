@@ -9,7 +9,7 @@ import publishCommand = require("./commands/publish");
 
 
 import { similar, log } from "render-utils";
-import { CLI_NAME, USER_HOME_PATH } from './constant';
+import { CLI_NAME, USER_HOME_PATH } from "./constant";
 import { program } from "commander";
 const pkg = require("../package.json");
 
@@ -44,18 +44,18 @@ const registerCommand = () => {
     program
         .version(pkg.version)
         .name(CLI_NAME)
-        .usage('<command> [options]');
+        .usage("<command> [options]");
 
     program
-        .option('-d, --debug', 'enable debug mode', false)
-        .option('-tp, --testPath <testPath>', 'specify the local test directory for development');
+        .option("-d, --debug", "enable debug mode", false)
+        .option("-tp, --testPath <testPath>", "specify the local test directory for development");
 
     // initialize the moka component or app
     program
-        .command('init [command]')
-        .description('initialize the project')
-        .option('-f, --force', 'force initialize the project', false)
-        .option('-u, --update', 'disable update of the latest version package', false)
+        .command("init [command]")
+        .description("initialize the project")
+        .option("-f, --force", "force initialize the project", false)
+        .option("-u, --update", "disable update of the latest version package", false)
         .action((...arg) => {
             console.log(arg[1])
             initCommand(arg[0], arg[1], arg[2]);
@@ -63,22 +63,22 @@ const registerCommand = () => {
 
     // run the moka component or app
     program
-        .command('dev [command]')
-        .description('run the moka component or app')
+        .command("dev [command]")
+        .description("run the moka component or app")
         .action((...arg) => {
             devCommand(arg[0], arg[1], arg[2]);
     });
 
     // publish the moka component or app    
     program
-        .command('publish [command]')
-        .description('publish the moka component or app    ')
+        .command("publish [command]")
+        .description("publish the moka component or app    ")
         .action((...arg) => {
             publishCommand(arg[0], arg[1], arg[2]);
         });
 
     // command tips 
-    program.on('command:*', (unavailableCommands) => {
+    program.on("command:*", (unavailableCommands) => {
         const unknownCommandName = unavailableCommands[0];
         log.error(`unknown command '${unknownCommandName}'`);
 
@@ -97,12 +97,12 @@ const registerCommand = () => {
     });
 
     // enable debug mode
-    program.on('option:debug', () => {
+    program.on("option:debug", () => {
         log.setLogLevel("debug");
     });
 
 
-    program.on('option:testPath', () => {
+    program.on("option:testPath", () => {
         process.env.LOCAL_DEV_PATH = program.opts().testPath;
     });
 

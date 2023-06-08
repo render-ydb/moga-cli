@@ -1,4 +1,4 @@
-import { Command, CommandType, Json } from 'render-command';
+import { Command, CommandType, Json } from "render-command";
 declare class PublishCommand extends Command {
     options: Json;
     constructor(rest: Json, options: Json, cmd: CommandType);

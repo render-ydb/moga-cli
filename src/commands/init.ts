@@ -3,9 +3,9 @@ import Package = require("render-package");
 import chalk = require("chalk");
 import semver = require("semver");
 
-import validateProjectName = require('validate-npm-package-name');
+import validateProjectName = require("validate-npm-package-name");
 // import { log } from "render-utils";
-import { Command, CommandType, Json } from 'render-command';
+import { Command, CommandType, Json } from "render-command";
 
 
 interface Options {
@@ -53,12 +53,12 @@ class InitCommand extends Command {
     async getAppType(): Promise<string> {
         const { pkgName }: { pkgName: string } = await
             prompt({
-                type: 'list',
-                name: 'pkgName',
-                message: 'Please select the application type',
-                default: 'BSOLUTION_ADMIN_SYSTEM',
+                type: "list",
+                name: "pkgName",
+                message: "Please select the application type",
+                default: "BSOLUTION_ADMIN_SYSTEM",
                 choices: [
-                    { name: 'moka-component', value: 'COMPONENT_DEMO' },
+                    { name: "moka-component", value: "COMPONENT_DEMO" },
                 ],
 
             });
@@ -69,17 +69,17 @@ class InitCommand extends Command {
     async getAppName(): Promise<string> {
         const { appName }: { appName: string } = await
             prompt({
-                type: 'input',
-                name: 'appName',
-                default: 'moka-app',
-                message: 'Please enter the applicaiton name:',
+                type: "input",
+                name: "appName",
+                default: "moka-app",
+                message: "Please enter the applicaiton name:",
                 validate(name: string) {
                     const done = this.async();
                     setTimeout(() => {
                         const validationResult = validateProjectName(name);
                         if (!validationResult.validForNewPackages) {
                             const errMsg: string[] = [];
-                            const tips = '\n   Please enter a new name';
+                            const tips = "\n   Please enter a new name";
                             [
                                 ...(validationResult.errors || []),
                                 ...(validationResult.warnings || []),
@@ -90,7 +90,7 @@ class InitCommand extends Command {
                                 "The application name " +
                                 chalk.blue.bold(`'${name}'`) +
                                 " does not follow the npm package naming convention:" +
-                                errMsg.join('') +
+                                errMsg.join("") +
                                 tips
                             ));
                             return;
@@ -106,15 +106,15 @@ class InitCommand extends Command {
         const { appVersion }: { appVersion: string } =
             await
                 prompt({
-                    type: 'input',
-                    name: 'appVersion',
-                    default: '1.0.0',
-                    message: 'Please enter the application version:',
+                    type: "input",
+                    name: "appVersion",
+                    default: "1.0.0",
+                    message: "Please enter the application version:",
                     validate(value: string) {
                         const done = this.async();
                         setTimeout(() => {
                             if (!semver.valid(value)) {
-                                done(chalk.red('Please enter a valid version'));
+                                done(chalk.red("Please enter a valid version"));
                                 return;
                             }
                             done(null, true);

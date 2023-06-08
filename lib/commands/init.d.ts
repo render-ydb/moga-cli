@@ -1,5 +1,5 @@
 import Package = require("render-package");
-import { Command, CommandType, Json } from 'render-command';
+import { Command, CommandType, Json } from "render-command";
 interface Options {
     force: boolean;
     update: boolean;
