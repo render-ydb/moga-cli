@@ -55,8 +55,9 @@ const registerCommand = () => {
         .command('init [command]')
         .description('initialize the project')
         .option('-f, --force', 'force initialize the project', false)
-        .option('-du, --disableupdate', 'disable automatic download of the latest version package', false)
+        .option('-u, --update', 'disable update of the latest version package', false)
         .action((...arg) => {
+            console.log(arg[1])
             initCommand(arg[0], arg[1], arg[2]);
         });
 
