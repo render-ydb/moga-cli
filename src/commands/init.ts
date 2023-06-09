@@ -1,11 +1,18 @@
 
+import path = require("path");
 import Package = require("render-package");
 import chalk = require("chalk");
 import semver = require("semver");
+import fse = require("fs-extra");
 
+import clearConsole = require("../utils/clearConsole");
+import ora,{Ora} from "ora";
+import { log } from "render-utils";
 import validateProjectName = require("validate-npm-package-name");
-// import { log } from "render-utils";
 import { Command, CommandType, Json } from "render-command";
+
+import { CLI_NAME } from "../constant";
+
 
 
 interface Options {
@@ -16,16 +23,15 @@ const inquirer = require("inquirer")
 const prompt = inquirer.prompt;
 class InitCommand extends Command {
     force: boolean;
-    needUpdate: boolean;
     appName: string;
     appVersion: string;
     pkgName: string;
     package: Package;
+    spinner: Ora
 
     constructor(rest: Json, options: Options, cmd: CommandType) {
         super(rest, options, cmd);
         this.force = false;
-        this.needUpdate = null;
         this.appName = null;
         this.appVersion = null;
         this.pkgName = null;
@@ -33,14 +39,21 @@ class InitCommand extends Command {
         this.init()
     }
     async init() {
-        const { force, update } = this.options;
+        const { force} = this.options;
         this.force = force;
-        this.needUpdate = !update;
         const { pkgName, appName, appVersion } = await this.getAppInfo();
         this.appName = appName;
         this.pkgName = pkgName;
         this.appVersion = appVersion;
+        this.package = new Package({
+            storePath: "packages",
+            localPkgCachePath: CLI_NAME,
+            pkgName
+        });
+        this.exec()
     }
+
+
 
     async getAppInfo() {
         return {
@@ -56,9 +69,9 @@ class InitCommand extends Command {
                 type: "list",
                 name: "pkgName",
                 message: "Please select the application type",
-                default: "BSOLUTION_ADMIN_SYSTEM",
+                default: "react",
                 choices: [
-                    { name: "moka-component", value: "COMPONENT_DEMO" },
+                    { name: "moka-component", value: "react" },
                 ],
 
             });
@@ -124,8 +137,72 @@ class InitCommand extends Command {
         return appVersion;
     }
 
-    exec(): void {
 
+    async exec() {
+        const isContinue = await this.checkCanContinue();
+        if (!isContinue) {
+            process.exit(1);
+        }
+        clearConsole();
+        this.setSpinner();
+        const isPkgExist = await this.package.isLocalPkgExist();
+        this.spinner.stop();
+        if(!isPkgExist) {
+            log.debug(
+                "No corresponding version of the" + 
+                this.pkgName + 
+                " found locally, " +
+                "starting to download from the network"
+            );
+        }
+
+    }
+
+    async checkCanContinue(): Promise<Boolean> {
+        const cwdPath = process.env.LOCAL_DEV_PATH || path.resolve(this.appName);
+        if (!this.isCwdPathEmpty(cwdPath)) {
+            if (!this.force) {
+                const { isContinue }: { isContinue: Boolean } = await
+                    prompt({
+                        type: "confirm",
+                        name: "isContinue",
+                        default: true,
+                        message: chalk.yellow(
+                            "Current directory (" + this.appName + ") is not empyt. " +
+                            "Do you want to continue with the operation:"
+                        ),
+                    });
+                if (!isContinue) {
+                    return;
+                }
+            }
+            const { isDelete }: { isDelete: Boolean } = await
+                prompt({
+                    type: "confirm",
+                    name: "isDelete",
+                    default: true,
+                    message: chalk.yellow(
+                        "Continuing with the operation will delete " +
+                        "all the files in the current directory (" + this.appName + ") :"
+                    ),
+
+                });
+
+            return isDelete;
+        }
+        return true
+    }
+
+    isCwdPathEmpty(cwdPath: string) {
+        fse.ensureDirSync(cwdPath);
+        const fileList = fse.readdirSync(cwdPath);
+        return !fileList || fileList.length === 0;
+    }
+
+    setSpinner() {
+        this.spinner = ora("").start();
+        this.spinner.color = "yellow";
+        this.spinner.text = "starting to download";
     }
 }
 

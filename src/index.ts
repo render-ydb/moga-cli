@@ -55,7 +55,6 @@ const registerCommand = () => {
         .command("init [command]")
         .description("initialize the project")
         .option("-f, --force", "force initialize the project", false)
-        .option("-u, --update", "disable update of the latest version package", false)
         .action((...arg) => {
             console.log(arg[1])
             initCommand(arg[0], arg[1], arg[2]);
@@ -109,8 +108,18 @@ const registerCommand = () => {
     program.parse(process.argv);
 }
 
+const CatchGlobalErrors = ()=>{
+    const printErrorInfo = (error:Error)=>{
+        log.error(error.stack || error.message);
+        process.exit(1);
+    }
+    process.on("uncaughtException",printErrorInfo);
+    process.on("unhandledRejection",printErrorInfo)
+}
+
 (
     async () => {
+        CatchGlobalErrors()
         try {
             await prepare();
             registerCommand()

@@ -2,10 +2,11 @@
     "compilerOptions": {
         "baseUrl": ".",
         "module": "commonjs",
+        "esModuleInterop": true,
         "moduleResolution": "node",
         "strict": true,
         "strictNullChecks": false,
-        "target": "es6",
+        "target": "ES6",
         "experimentalDecorators": true,
         "skipLibCheck": true,
         "declaration": true,
