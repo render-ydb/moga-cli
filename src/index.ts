@@ -50,7 +50,7 @@ const registerCommand = () => {
         .option("-d, --debug", "enable debug mode", false)
         .option("-tp, --testPath <testPath>", "specify the local test directory for development");
 
-    // initialize the moka component or app
+    // initialize the moga component or app
     program
         .command("init [command]")
         .description("initialize the project")
@@ -60,18 +60,18 @@ const registerCommand = () => {
             initCommand(arg[0], arg[1], arg[2]);
         });
 
-    // run the moka component or app
+    // run the moga component or app
     program
         .command("dev [command]")
-        .description("run the moka component or app")
+        .description("run the moga component or app")
         .action((...arg) => {
             devCommand(arg[0], arg[1], arg[2]);
     });
 
-    // publish the moka component or app    
+    // publish the moga component or app    
     program
         .command("publish [command]")
-        .description("publish the moka component or app    ")
+        .description("publish the moga component or app    ")
         .action((...arg) => {
             publishCommand(arg[0], arg[1], arg[2]);
         });

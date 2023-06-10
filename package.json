@@ -1,9 +1,9 @@
 {
-  "name": "moka-cli",
+  "name": "moga-cli",
   "version": "0.0.1-beta.1",
-  "description": "The engineering scaffolding supporting moka low code solution",
+  "description": "The engineering scaffolding supporting moga low code solution",
   "bin": {
-    "moka": "lib/index.js"
+    "moga": "lib/index.js"
   },
   "scripts": {
     "start": "tsc -w",
@@ -29,15 +29,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/render-ydb/moka-cli.git"
+    "url": "git+https://github.com/render-ydb/moga-cli.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/render-ydb/moka-cli/issues"
+    "url": "https://github.com/render-ydb/moga-cli/issues"
   },
-  "homepage": "https://github.com/render-ydb/moka-cli#readme",
+  "homepage": "https://github.com/render-ydb/moga-cli#readme",
   "dependencies": {
     "chalk": "4.1.2",
     "commander": "^10.0.1",

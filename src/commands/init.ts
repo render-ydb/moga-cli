@@ -72,7 +72,7 @@ class InitCommand extends Command {
                 message: "Please select the application type",
                 default: "render-component-template",
                 choices: [
-                    { name: "moka-component", value: "render-component-template" },
+                    { name: "moga-component", value: "render-component-template" },
                 ],
 
             });
@@ -85,7 +85,7 @@ class InitCommand extends Command {
             prompt({
                 type: "input",
                 name: "appName",
-                default: "moka-app",
+                default: "moga-app",
                 message: "Please enter the applicaiton name:",
                 validate(name: string) {
                     const done = this.async();
