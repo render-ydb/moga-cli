@@ -1,6 +1,6 @@
 {
   "name": "moga-cli",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "The engineering scaffolding supporting moga low code solution",
   "bin": {
     "moga": "lib/index.js"

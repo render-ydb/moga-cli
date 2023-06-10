@@ -6,13 +6,13 @@ import semver = require("semver");
 import fse = require("fs-extra");
 import os = require("os");
 
-import clearConsole = require("../utils/clearConsole");
 import ora, { Ora } from "ora";
 import { log } from "render-utils";
 import validateProjectName = require("validate-npm-package-name");
 import { Command, CommandType, Json } from "render-command";
 
-import { CLI_NAME } from "../constant";
+import { CLI_NAME,APP_LIST } from "../constant";
+import clearConsole = require("../utils/clearConsole");
 
 
 
@@ -70,10 +70,7 @@ class InitCommand extends Command {
                 type: "list",
                 name: "pkgName",
                 message: "Please select the application type",
-                default: "render-component-template",
-                choices: [
-                    { name: "moga-component", value: "render-component-template" },
-                ],
+                choices: APP_LIST,
 
             });
 
