@@ -12,6 +12,9 @@
     "lint-fix": "eslint --cache --ext .js,.ts ./ --fix",
     "prettier": "prettier --write '**/*.{js,ts,md,json}'"
   },
+
+  "private":"false",
+
   "engines": {
     "node": ">=8.6.0",
     "npm": ">=3.0.0"
