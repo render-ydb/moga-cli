@@ -56,7 +56,6 @@ const registerCommand = () => {
         .description("initialize the project")
         .option("-f, --force", "force initialize the project", false)
         .action((...arg) => {
-            console.log(arg[1])
             initCommand(arg[0], arg[1], arg[2]);
         });
 
