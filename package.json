@@ -1,6 +1,6 @@
 {
   "name": "moka-cli",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "description": "The engineering scaffolding supporting moka low code solution",
   "bin": {
     "moka": "lib/index.js"
