@@ -3,8 +3,9 @@
 import rootCheck = require("root-check");
 import semver = require("semver");
 import fs = require("fs");
-import devCommand = require("./commands/dev");
 import initCommand = require("./commands/init");
+import devCommand = require("./commands/dev");
+import buildCommand = require("./commands/build");
 import publishCommand = require("./commands/publish");
 
 
@@ -65,7 +66,16 @@ const registerCommand = () => {
         .description("run the moga component or app")
         .action((...arg) => {
             devCommand(arg[0], arg[1], arg[2]);
-    });
+        });
+
+    // build moga app
+    program
+        .command("build [command]")
+        .description("build the moga app")
+        .action((...arg) => {
+            devCommand(arg[0], arg[1], arg[2]);
+        });
+
 
     // publish the moga component or app    
     program
@@ -107,13 +117,13 @@ const registerCommand = () => {
     program.parse(process.argv);
 }
 
-const CatchGlobalErrors = ()=>{
-    const printErrorInfo = (error:Error)=>{
+const CatchGlobalErrors = () => {
+    const printErrorInfo = (error: Error) => {
         log.error(error.stack || error.message);
         process.exit(1);
     }
-    process.on("uncaughtException",printErrorInfo);
-    process.on("unhandledRejection",printErrorInfo)
+    process.on("uncaughtException", printErrorInfo);
+    process.on("unhandledRejection", printErrorInfo)
 }
 
 (
