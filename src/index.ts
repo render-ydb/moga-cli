@@ -62,8 +62,7 @@ const registerCommand = () => {
 
     // run the moga component or app
     program
-        .argument("<file>")
-        .command("dev [command]")
+        .command("start [command]")
         .description("run the moga component or app")
         .option("--config [config]", "specify configuration file location")
         .action((...arg) => {

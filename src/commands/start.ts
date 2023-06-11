@@ -1,7 +1,5 @@
 import { Command, CommandType, Json } from "render-command";
 import { spawn } from "child_process";
-import { log } from "render-utils";
-import chalk from "chalk";
 
 class StartCommand extends Command {
     options: Json;
@@ -16,15 +14,9 @@ class StartCommand extends Command {
 
     exec(): void {
         const nProcessArgv = process.argv.slice(2);
-        const builder = spawn("npx", ["render-builder", "start", ...nProcessArgv]);
-        builder.stdout.on("data", (data: Buffer) => {
-            console.log(data.toString())
-        })
-
-
-        builder.stderr.on("data", (data: Buffer) => {
-            console.log(chalk.red(data.toString()))
-        })
+        spawn("npx", ["render-builder", "start", ...nProcessArgv],{
+            stdio:["inherit","inherit","inherit"]
+        });
     }
 }
 
