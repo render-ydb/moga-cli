@@ -41,9 +41,8 @@ const checkUSER_HOME_PATH = () => {
 };
 
 const registerCommand = () => {
-
     program
-        .version(pkg.version)
+        .version(pkg.version,"-v, --version","output the version number")
         .name(CLI_NAME)
         .usage("<command> [options]");
 
@@ -51,7 +50,7 @@ const registerCommand = () => {
         .option("-d, --debug", "enable debug mode", false)
         .option("-tp, --testPath <testPath>", "specify the local test directory for development");
 
-    // initialize the moga component or app
+    // initialize the moga app
     program
         .command("init [command]")
         .description("initialize the project")
@@ -60,10 +59,10 @@ const registerCommand = () => {
             initCommand(arg[0], arg[1], arg[2]);
         });
 
-    // run the moga component or app
+    // run the moga app
     program
         .command("start [command]")
-        .description("run the moga component or app")
+        .description("run the moga app")
         .option("--config [config]", "specify configuration file location")
         .action((...arg) => {
             startCommand(arg[0], arg[1], arg[2]);
