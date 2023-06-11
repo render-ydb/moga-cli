@@ -4,7 +4,7 @@ import rootCheck = require("root-check");
 import semver = require("semver");
 import fs = require("fs");
 import initCommand = require("./commands/init");
-import devCommand = require("./commands/dev");
+import startCommand = require("./commands/start");
 import buildCommand = require("./commands/build");
 import publishCommand = require("./commands/publish");
 
@@ -62,10 +62,12 @@ const registerCommand = () => {
 
     // run the moga component or app
     program
+        .argument("<file>")
         .command("dev [command]")
         .description("run the moga component or app")
+        .option("--config [config]", "specify configuration file location")
         .action((...arg) => {
-            devCommand(arg[0], arg[1], arg[2]);
+            startCommand(arg[0], arg[1], arg[2]);
         });
 
     // build moga app
@@ -80,7 +82,7 @@ const registerCommand = () => {
     // publish the moga component or app    
     program
         .command("publish [command]")
-        .description("publish the moga component or app    ")
+        .description("publish the moga component or app")
         .action((...arg) => {
             publishCommand(arg[0], arg[1], arg[2]);
         });
