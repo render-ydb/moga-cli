@@ -26,4 +26,4 @@ export const APP_LIST: Array<{ name: string, value: string }> = [
     },
 ];
 
-// 四个应用模板 四个编译的plugin 
+export const BUILDER_CONFIG_FILE_TYPE = ["build.json", "build.config.(js|ts|mjs|mts|cjs|cts)"];
