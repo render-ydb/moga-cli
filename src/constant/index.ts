@@ -6,7 +6,7 @@ export const CLI_NAME = "moga-cli";
 export const APP_LIST: Array<{ name: string, value: string }> = [
     {
         name: "component-app (applicaiton of MOGA-compliant components)",
-        value: "moga-template"
+        value: "moga-component"
     },
     {
         name: "module-app (applicaiton of MOGA-compliant module)",
@@ -24,4 +24,6 @@ export const APP_LIST: Array<{ name: string, value: string }> = [
         name: "mpa-app (applicaiton of MOGA-compliant mpa)",
         value: "moga-mpa"
     },
-]
+];
+
+// 四个应用模板 四个编译的plugin 
