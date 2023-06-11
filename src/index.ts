@@ -73,7 +73,7 @@ const registerCommand = () => {
         .command("build [command]")
         .description("build the moga app")
         .action((...arg) => {
-            devCommand(arg[0], arg[1], arg[2]);
+            buildCommand(arg[0], arg[1], arg[2]);
         });
 
 
