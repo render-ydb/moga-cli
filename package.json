@@ -43,7 +43,7 @@
     "inquirer": "^8.2.4",
     "npmlog": "^7.0.1",
     "ora": "^5.4.1",
-    "render-builder": "^1.0.7",
+    "render-builder": "^1.0.8",
     "render-command": "^1.0.0",
     "render-package": "^1.0.7",
     "render-utils": "^1.0.7",
